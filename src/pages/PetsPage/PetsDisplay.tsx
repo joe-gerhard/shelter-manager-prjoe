@@ -54,7 +54,7 @@ const PetsDisplay = () => {
 
     return (
         <Styled.PetsDisplay>
-            {pets.map(pet => <PetCard pet={pet} />)}
+            {pets.map((pet, idx) => <PetCard key={idx} pet={pet} />)}
         </Styled.PetsDisplay>
     )
 }

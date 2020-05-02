@@ -6,6 +6,7 @@ type PetsPageProps = {
     theme: Theme;
     active?: string;
     open?: boolean;
+    selected?: boolean;
 }
 
 const PetsPage = styled(Page)(({ theme }: PetsPageProps) => css`
@@ -74,12 +75,16 @@ const Input = styled.input(({ theme, open }: PetsPageProps) => css`
     }
 `)
 
-const SearchBar = styled.div(({ theme }:PetsPageProps) => css`
-    height: 80px;
+const ControlsBar = styled.div(({ theme }:PetsPageProps) => css`
+    height: 120px;
     width: 100%;
     display: flex;
     flex-direction: column;
     padding: 20px;
+
+    div {
+        display: flex;        
+    }
 
 `)
 
@@ -112,13 +117,90 @@ const PetCard = styled.div(({ theme }: PetsPageProps) => css`
     }
 `)
 
+const SearchInput = styled.div(({ theme }: PetsPageProps) => css`
+    display: flex;
+    align-items: center;
+    border: 2px solid ${theme.primary};
+    border-radius: 3px;
+    height: 40px;
+    color: ${theme.dark};
+
+    button {
+        height: 100%;
+        width: 40px;
+        font-size: 20px;
+        border: none;
+        color: ${theme.light};
+        background: ${theme.primary};
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:focus {
+            outline: none;
+            background: ${theme.light};
+            color: ${theme.primary};
+        }
+    }
+
+    input {
+        font-size: 18px;
+        color: ${theme.dark};
+        border: none;
+        border-left: 2px solid ${theme.primary};
+        height: 100%;
+        padding: 0 10px;
+        caret-color: ${theme.dark};
+
+        &:focus {
+            outline: none;
+        }
+    }
+`)
+
+const SortDropdown = styled.div(({ theme }: PetsPageProps) => css`
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+    font-size: 18px;
+
+    select {
+        margin: 0 5px;
+    }
+`)
+
+const DisplaySelector = styled.div(({ theme }: PetsPageProps) => css`
+    height: 40px;
+    display: flex;
+    align-items: center;
+`)
+
+const DisplayIcon = styled.button(({ theme, selected }: PetsPageProps) => css`
+    border: 2px solid ${selected ? theme.primary : 'transparent'};
+    background: none;
+    border-radius: 3px;
+    height: 30px;
+    width: 30px;
+    font-size: 20px;
+    color: ${theme.primary};
+
+    &:focus {
+        outline: none;
+    }
+`)
+
 export default { 
     PetsPage,
     AddPetForm,
     Button,
     SubmitButton,
     Input,
-    SearchBar,
+    ControlsBar,
     PetsDisplay,
     PetCard,
+    SearchInput,
+    SortDropdown,
+    DisplaySelector,
+    DisplayIcon,
 }
