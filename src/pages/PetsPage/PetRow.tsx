@@ -4,9 +4,10 @@ import Styled from './styles'
 
 type PetRowProps = {
     pet: Pet | 'header';
+    onClick?: ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void) | undefined
 }
 
-const PetRow = ({ pet }: PetRowProps) => {
+const PetRow = ({ pet, onClick }: PetRowProps) => {
     if(pet === 'header') {
         return (
             <Styled.PetRow header>
@@ -20,7 +21,7 @@ const PetRow = ({ pet }: PetRowProps) => {
         )
     } else {
         return (
-            <Styled.PetRow>
+            <Styled.PetRow onClick={onClick}>
                 <span>{pet.name}</span>
                 <span>{pet.species}</span>
                 <span>{pet.breed}</span>

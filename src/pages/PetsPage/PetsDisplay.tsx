@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Dispatch } from 'react'
 import Styled from './styles'
 import PetCard from './PetCard'
 import PetRow from './PetRow'
 import { db } from '../../util/firebase'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { AppState } from '../../redux/reducers/rootReducter'
+import { useHistory } from 'react-router-dom'
+import { PetsActions } from '../../redux/actions/PetsActions'
 
 export type Pet = {
     name: string;
@@ -19,7 +21,9 @@ export type Pet = {
 const PetsDisplay = () => {
 
     const { displayType } = useSelector((state: AppState) => state.UI)
-    const [ pets, setPets ] = useState<Pet[]>([]);
+    const [ pets, setPets ] = useState<Pet[]>([])
+    const history = useHistory()
+    const petsDispatch = useDispatch<Dispatch<PetsActions>>();
 
     useEffect(() => {
         
@@ -41,7 +45,6 @@ const PetsDisplay = () => {
                     adorableness: data.adorableness,
                     imageUrl: data.imageUrl,
                 }
-                console.log(petArr)
                 petArr.push(pet);
             })
 
@@ -49,15 +52,20 @@ const PetsDisplay = () => {
         })
     },[])
 
+    const handleShowPetPage = (pet: Pet) => {
+        petsDispatch({type: 'SET_SELECTED_PET', payload: pet})
+        history.push('/pet')
+    }
+
     return (
         <Styled.PetsDisplay displayType={displayType}>
             {displayType === "card" 
-            ? pets.map((pet, idx) => <PetCard key={idx} pet={pet} />)
+            ? pets.map((pet, idx) => <PetCard onClick={() => handleShowPetPage(pet)} key={idx} pet={pet} />)
             : null }
             {displayType === "row"
             ? <> 
             <PetRow pet={'header'}/>
-            {pets.map((pet, idx) => <PetRow key={idx} pet={pet} />)}
+            {pets.map((pet, idx) => <PetRow onClick={() => handleShowPetPage(pet)} key={idx} pet={pet} />)}
             </>
             : null }
             

@@ -118,7 +118,7 @@ const PetCard = styled.div(({ theme }: PetsPageProps) => css`
     transition: all .5s;
 
     &:hover {
-        background: ${theme.primary + '55'};
+        background: ${theme.primary};
         cursor: pointer;
         bottom: 5px;
 
@@ -130,7 +130,7 @@ const PetCard = styled.div(({ theme }: PetsPageProps) => css`
     div {
         min-height: 40px;
         font-size: 20px;
-        color: ${theme.darkGrey};
+        color: ${theme.dark};
         display: flex;
         padding: 10px;
     }
@@ -150,7 +150,7 @@ const PetRow = styled.div(({ theme, header }: PetsPageProps) => css`
     display: flex;
 
     &:hover {
-        background: ${header ? theme.darkGrey : theme.primary + '55'};
+        background: ${header ? theme.darkGrey : theme.primary + '44'};
         cursor: pointer;
     }
     

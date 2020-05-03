@@ -4,11 +4,12 @@ import { Pet } from './PetsDisplay'
 
 type PetCardProps = {
     pet: Pet
+    onClick?: ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void) | undefined;
 }
 
-const PetCard = ({ pet }: PetCardProps) => {
+const PetCard = ({ pet, onClick }: PetCardProps) => {
     return (
-        <Styled.PetCard>
+        <Styled.PetCard onClick={onClick}>
             <div>
                 {pet.name}
             </div>
