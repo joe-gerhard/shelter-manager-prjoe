@@ -7,6 +7,8 @@ type PetsPageProps = {
     active?: string;
     open?: boolean;
     selected?: boolean;
+    displayType?: 'card' | 'row';
+    header?: boolean;
 }
 
 const PetsPage = styled(Page)(({ theme }: PetsPageProps) => css`
@@ -88,24 +90,47 @@ const ControlsBar = styled.div(({ theme }:PetsPageProps) => css`
 
 `)
 
-const PetsDisplay = styled.div(({ theme }: PetsPageProps) => css`
-    width: 100%;
-    display: flex;
-    padding: 0 20px;
-`)
+const PetsDisplay = styled.div(({ theme, displayType }: PetsPageProps) => {
+    let flexDirection: string = '';
+
+    if(displayType === 'card') flexDirection = 'row'
+    else if(displayType === 'row') flexDirection = 'column'
+    else flexDirection = 'row'
+
+    return css`
+        width: 100%;
+        display: flex;
+        flex-direction: ${flexDirection};
+        flex-wrap: wrap;
+        padding: 0 20px;
+    `
+})
 
 const PetCard = styled.div(({ theme }: PetsPageProps) => css`
+    position: relative;
+    bottom: 0;
     height: 300px;
     width: 300px;
     margin: 20px;
-    box-shadow: 0 5px 10px ${theme.lightGrey};
+    box-shadow: 0 5px 10px ${theme.darkGrey};
     border-radius: 10px;
     overflow: hidden;
+    transition: all .5s;
+
+    &:hover {
+        background: ${theme.primary + '55'};
+        cursor: pointer;
+        bottom: 5px;
+
+        div {
+            color: ${theme.light};
+        }
+    }
 
     div {
         min-height: 40px;
         font-size: 20px;
-        color: ${theme.lightGrey};
+        color: ${theme.darkGrey};
         display: flex;
         padding: 10px;
     }
@@ -114,6 +139,27 @@ const PetCard = styled.div(({ theme }: PetsPageProps) => css`
         width: 100%;
         height: 100%;
         object-fit: cover;
+    }
+`)
+
+const PetRow = styled.div(({ theme, header }: PetsPageProps) => css`
+    height: 30px;
+    background: ${header ? theme.darkGrey : theme.lightGrey};
+    border: 1px dashed ${theme.darkGrey};
+    border-top: none;
+    display: flex;
+
+    &:hover {
+        background: ${header ? theme.darkGrey : theme.primary + '55'};
+        cursor: pointer;
+    }
+    
+    span {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0 5px;
+        color: ${theme.dark};
     }
 `)
 
@@ -199,6 +245,7 @@ export default {
     ControlsBar,
     PetsDisplay,
     PetCard,
+    PetRow,
     SearchInput,
     SortDropdown,
     DisplaySelector,

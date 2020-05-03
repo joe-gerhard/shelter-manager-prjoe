@@ -2,7 +2,7 @@ import { UIActions } from "../actions/UIActions";
 import { Reducer } from "redux";
 
 type UIState = {
-    displayType: string;
+    displayType: 'card' | 'row';
 }
 
 const initialState: UIState = {

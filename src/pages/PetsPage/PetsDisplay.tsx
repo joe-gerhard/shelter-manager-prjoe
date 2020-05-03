@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Styled from './styles'
 import PetCard from './PetCard'
+import PetRow from './PetRow'
+import { db } from '../../util/firebase'
+import { useSelector } from 'react-redux'
+import { AppState } from '../../redux/reducers/rootReducter'
 
 export type Pet = {
     name: string;
@@ -12,49 +16,51 @@ export type Pet = {
     imageUrl: string;
 }
 
-const petData: Pet[] = [
-    {
-        name: "Spot",
-        species: "dog",
-        breed: "Weiner",
-        age: 4,
-        daysInShelter: 30,
-        adorableness: 9,
-        imageUrl: "https://cdn.akc.org/dachshund-bear-cover.jpg",
-    },
-    {
-        name: "Buster",
-        species: "dog",
-        breed: "Fuzzy",
-        age: 7,
-        daysInShelter: 90,
-        adorableness: 7,
-        imageUrl: "https://s3.amazonaws.com/playbarkrun/wp-content/uploads/2018/10/02124018/Coton-De-Tulear.jpg",
-    },
-    {
-        name: "Yogi",
-        species: "dog",
-        breed: "Shitzu/Chihuahua/Chow Mix",
-        age: 5,
-        daysInShelter: 30,
-        adorableness: 10,
-        imageUrl: "https://dogzone-tcwebsites.netdna-ssl.com/wp-content/uploads/2018/08/golden-retriever-corgi-mix-1.jpg",
-    },
-]
-
 const PetsDisplay = () => {
 
+    const { displayType } = useSelector((state: AppState) => state.UI)
     const [ pets, setPets ] = useState<Pet[]>([]);
 
     useEffect(() => {
+        
+        let petArr: Pet[] = []
 
-        // TODO: add the database call here
-        setPets(petData);
+        db.collection('pets').get({})
+        .then(response => {
+
+            response.forEach(result => {
+
+                const data = result.data()
+
+                let pet: Pet = {
+                    name: data.name,
+                    species: data.species,
+                    breed: data.breed,
+                    age: data.age,
+                    daysInShelter: data.daysInShelter,
+                    adorableness: data.adorableness,
+                    imageUrl: data.imageUrl,
+                }
+                console.log(petArr)
+                petArr.push(pet);
+            })
+
+            setPets(petArr);
+        })
     },[])
 
     return (
-        <Styled.PetsDisplay>
-            {pets.map((pet, idx) => <PetCard key={idx} pet={pet} />)}
+        <Styled.PetsDisplay displayType={displayType}>
+            {displayType === "card" 
+            ? pets.map((pet, idx) => <PetCard key={idx} pet={pet} />)
+            : null }
+            {displayType === "row"
+            ? <> 
+            <PetRow pet={'header'}/>
+            {pets.map((pet, idx) => <PetRow key={idx} pet={pet} />)}
+            </>
+            : null }
+            
         </Styled.PetsDisplay>
     )
 }

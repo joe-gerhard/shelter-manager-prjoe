@@ -11,7 +11,7 @@ const DisplaySelector = () => {
     const { displayType } = useSelector((state: AppState) => state.UI)
     const UIDispatch = useDispatch<Dispatch<UIActions>>();
 
-    const setDisplayType = (type: string) => {
+    const setDisplayType = (type: 'card' | 'row') => {
         UIDispatch({type: 'SET_DISPLAY_TYPE', payload: type})
     }
 

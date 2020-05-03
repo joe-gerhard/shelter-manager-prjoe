@@ -1,6 +1,6 @@
 export interface ISetDisplayTypeAction {
     readonly type: 'SET_DISPLAY_TYPE';
-    payload: string;
+    payload: 'card' | 'row';
 }
 
 export type UIActions = 
