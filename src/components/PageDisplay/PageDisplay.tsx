@@ -7,6 +7,7 @@ import Styled from './styles'
 import ShowPetPage from '../../pages/ShowPetPage'
 import { useSelector } from 'react-redux'
 import { AppState } from '../../redux/reducers/rootReducter'
+import SocialPage from '../../pages/SocialPage'
 
 const PageDisplay = () => {
     const { selectedPet } = useSelector((state: AppState) => state.Pets)
@@ -17,6 +18,7 @@ const PageDisplay = () => {
                 {selectedPet && <Route path="/pet" component={ShowPetPage} />}
                 <Route path="/pets" component={PetsPage} />
                 <Route path="/petowners" component={PetOwnersPage} />
+                <Route path="/social" component={SocialPage} />
                 <Route path="/" component={LandingPage} />
             </Switch>
         </Styled.PageDisplay>

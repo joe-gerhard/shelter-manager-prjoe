@@ -1,6 +1,6 @@
 import React from 'react'
-import { Pet } from './PetsDisplay'
 import Styled from './styles'
+import { Pet } from './types'
 
 type PetRowProps = {
     pet: Pet | 'header';

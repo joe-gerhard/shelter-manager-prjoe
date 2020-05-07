@@ -64,7 +64,6 @@ const Input = styled.input(({ theme, open }: PetsPageProps) => css`
     font-size: 16px;
     height: 40px;
     min-height: 40px;
-    margin-top: 20px;
     padding: 0 20px;
     border: 1px solid ${theme.lightGrey};
     border-radius: 3px;
@@ -75,6 +74,17 @@ const Input = styled.input(({ theme, open }: PetsPageProps) => css`
         outline: none;
         box-shadow: 0 0 5px ${theme.primary};
     }
+`)
+
+const Label = styled.label(({ theme, open }: PetsPageProps) => css`
+    opacity: ${open ? 1 : 0};
+    display: flex;
+    color: ${theme.secondary};
+    width: 50vw;
+    margin-top: 20px;
+    flex-direction: column;
+    font-size: 16px;
+    transition: opacity ${open ? '.5s .5s' : 0};
 `)
 
 const ControlsBar = styled.div(({ theme }:PetsPageProps) => css`
@@ -242,6 +252,7 @@ export default {
     Button,
     SubmitButton,
     Input,
+    Label,
     ControlsBar,
     PetsDisplay,
     PetCard,
